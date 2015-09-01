@@ -4,11 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import checkpoint.andela.main.Book;
+
 public class BookTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testMember() {
+		Book book = new Book();
+		assertNotNull(book);
 	}
 
 }

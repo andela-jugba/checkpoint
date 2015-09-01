@@ -2,7 +2,7 @@ package checkpoint.andela.main;
 
 import java.util.Date;
 
-//Member class create to sever as superclass for students and staff class
+//Member class create to serve as superclass for students and staff class
 
 public class Member {
 	private String fullName; //full name of this member
@@ -11,6 +11,7 @@ public class Member {
 	private String email; // email of this member
 	private String phoneNumber;
 	private Date dateOfRegistration;
+	private BookHolder bookHolder;
 	
 	
 	// four-argument constructor
@@ -21,8 +22,24 @@ public class Member {
 		this.phoneNumber = phoneNumber;
 		
 		setDateOfRegistration();
+		bookHolder = new BookHolder();
 	}
 	
+	
+	
+	public Member() {
+		fullName = null;
+		gender = 'N';
+		dateOfbirth = null;
+		email = null;
+		phoneNumber = null;
+		
+		setDateOfRegistration();
+		
+	}
+
+
+
 	//set the full name of the member
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
@@ -84,5 +101,14 @@ public class Member {
 		return dateOfRegistration;
 	}
 	
+	// borrow book
+	public void borrowBook(Book book) {
+		bookHolder.add(book);
+	}
+	
+	// return book 
+	public Book returnBook(Book book) {
+		return bookHolder.remove(book);
+	}
 	
 }
