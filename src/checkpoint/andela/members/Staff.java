@@ -6,6 +6,7 @@ public class Staff extends Member {
 	
 	private String staffNumber;
 	private Double netPay;
+	private String studentNumber;
 
 	public Staff(String fullName, char g, String dateOfbirth, String phoneNumber) {
 		super(fullName, g, dateOfbirth, phoneNumber);
@@ -30,6 +31,13 @@ public class Staff extends Member {
 	public void setNetPay(Double netPay) {
 		if(netPay > 0)this.netPay = netPay;
 		else throw new IllegalArgumentException("Netpay must be greater than Zero");
+	}
+	public void assignToStudent(Student testStudent) {
+		// TODO Auto-generated method stub
+		
+	}
+	public String getStudentNumber() {
+		return studentNumber;
 	}
 
 }
