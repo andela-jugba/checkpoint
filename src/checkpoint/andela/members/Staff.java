@@ -29,7 +29,7 @@ public class Staff extends Member {
 	}
 
 	public void setNetPay(Double netPay) {
-		if(netPay > 0)this.netPay = netPay;
+		if(netPay >= 0)this.netPay = netPay;
 		else throw new IllegalArgumentException("Netpay must be greater than Zero");
 	}
 	public void assignToStudent(Student testStudent) {
