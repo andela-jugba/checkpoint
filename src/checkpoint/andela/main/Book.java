@@ -1,13 +1,15 @@
 package checkpoint.andela.main;
 
+import java.util.UUID;
+
 public class Book {
 	private String bookName; // name of Book
 	private String author; // name of book Author
 	private int numberOfCopies; // number of copies of book
 	private String isbnNumber; // ISBN number of book
+	private String bookId; // Id tag for Book
 	
-	
-	
+
 	public Book(String bookName, String author, int numberOfCopies, String isbnNumber) {
 		this.bookName = bookName;
 		this.author = author;
@@ -22,6 +24,15 @@ public class Book {
 		author = null;
 		numberOfCopies = 0;
 		isbnNumber = null;
+	}
+	
+	public Book(String bookName, String author, String isbnNumber) {
+		this.bookName = bookName;
+		this.author = author;
+		this.numberOfCopies = 1;
+		this.isbnNumber = isbnNumber;
+		
+		generateBookId();
 	}
 
 
@@ -66,5 +77,15 @@ public class Book {
 		return isbnNumber;
 	}
 	
+	private void generateBookId() {
+		UUID num = UUID.randomUUID();
+		bookId = num.toString();
+	}
+
+	public String getBookId() {
+		return bookId;
+	}
+
+
 
 }

@@ -67,7 +67,7 @@ public class Member {
 	}
 	
 	// set 
-	public void setDateOfRegistration() {
+	private void setDateOfRegistration() {
 		this.dateOfRegistration = new Date();
 	}
 	
@@ -106,9 +106,18 @@ public class Member {
 		bookHolder.add(book);
 	}
 	
-	// return book 
+	// return specific book 
 	public Book returnBook(Book book) {
 		return bookHolder.remove(book);
+	}
+
+	// return the first book borrowed
+	public Book returnBook() {
+		return bookHolder.pop();
+	}
+
+	public int getNumberOfBooksBorrowed() {
+		return bookHolder.numberOfBooks();
 	}
 	
 }
