@@ -2,9 +2,11 @@ package checkpoint.andela.main;
 
 import java.util.Date;
 
+import checkpoint.andela.readersclub.ReadersClub;
+
 //Member class create to serve as superclass for students and staff class
 
-public class Member {
+public class Member implements Comparable<Member>{
 	private String fullName; //full name of this member
 	private char gender; // gender of this member
 	private String dateOfbirth; // date of birth of this member
@@ -35,7 +37,7 @@ public class Member {
 		phoneNumber = null;
 		
 		setDateOfRegistration();
-		
+		bookHolder = new BookHolder();
 	}
 
 
@@ -102,25 +104,30 @@ public class Member {
 	}
 	
 	// borrow book
-	public void borrowBook(Book book) {
-		bookHolder.add(book);
+	public boolean borrowBook(Book book) {
+		return ReadersClub.borrowBook(this, book);
 	}
 	
 	// return specific book 
-	public Book returnBook(Book book) {
-		return bookHolder.remove(book);
+	public boolean returnBook(Book book) {
+		return ReadersClub.returnBook(this, book);
 	}
 
-	// return the first book borrowed
-	public Book returnBook() {
-		return bookHolder.pop();
-	}
 
 	public int getNumberOfBooksBorrowed() {
 		return bookHolder.numberOfBooks();
 	}
 
-
+	// compares members by date of registration
+		public int compareTo(Member member) {
+			if(getDateOfRegistration().getTime() > member.getDateOfRegistration().getTime()) {
+				return 1;
+			}
+			if(getDateOfRegistration().getTime() < member.getDateOfRegistration().getTime()) {
+				return -1;
+			}
+			return 0;
+		}
 
 	public BookHolder getBookHolder() {
 		return bookHolder;

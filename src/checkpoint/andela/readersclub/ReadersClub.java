@@ -8,25 +8,26 @@ import java.util.PriorityQueue;
 import checkpoint.andela.main.Book;
 import checkpoint.andela.main.Member;
 import checkpoint.andela.members.Staff;
+import checkpoint.andela.members.Student;
 
 public class ReadersClub {
 
-	private static HashMap<String, LinkedList<Object>> bookQueues;
-	private static ArrayList<Book> bookList;
+	private static HashMap<String, LinkedList<Object>> bookQueues = new HashMap<>();
+	private static ArrayList<Book> bookList = new ArrayList<>();
 	
 	public ReadersClub(){
-		bookQueues = new HashMap<>();
-		bookList = new ArrayList<>(); 
+		//bookQueues = new HashMap<>();
+		//bookList = new ArrayList<>(); 
 	}
 	
 	public boolean addBookToClub(Book book) {
 		boolean bookStatus;
 		String bookTitle =  book.getBookName();
 		
-		if (!bookList.contains(bookTitle)) {
+		if (!getBookList().contains(book)) {
 		// Add books to Club
-		bookQueues.put(bookTitle, bookQueue(book));
-		bookList.add(book);
+		getBookQueues().put(bookTitle, bookQueue(book));
+		getBookList().add(book);
 		bookStatus = true;
 		}else {
 			bookStatus = false;
@@ -47,21 +48,21 @@ public class ReadersClub {
 		 * 
 		 * */
 		
-		if(bookList.contains(book.getBookName())) {
+		if(getBookList().contains(book)) {
 			// queue book borrowing members
 			if(member instanceof Staff) {
-				pQueueStaff = (PriorityQueue<Member>) bookQueues.get(book.getBookName()).get(1);
+				pQueueStaff = (PriorityQueue<Member>) getBookQueues().get(book.getBookName()).get(1);
 				if(!pQueueStaff.contains(member)) pQueueStaff.offer(member);
-				System.out.println(bookQueues.toString());
-			}else {
-				pQueueStudents = (PriorityQueue<Member>) bookQueues.get(book.getBookName()).getLast();
+				return true;
+			}else 
+			if(member instanceof Student){
+				pQueueStudents = (PriorityQueue<Member>) getBookQueues().get(book.getBookName()).get(2);
 				if(!pQueueStudents.contains(member)) pQueueStudents.offer(member);
-				System.out.println(bookQueues.toString());
+				return true;
 			}
-			return true;
-		}else {
-			return false;
 		}
+			return false;
+
 		
 	}
 	
@@ -78,12 +79,19 @@ public class ReadersClub {
 	}
 	
 	// process one book queue
-	public void processQueue(Book book) {
-		LinkedList<Object>queue = bookQueues.get(book.getBookName());
+	public boolean processQueue(Book book) {
+		int num;
+		
+		if(getBookQueues().containsKey(book.getBookName())) {
+			
+		LinkedList<Object>queue = getBookQueues().get(book.getBookName());
 		PriorityQueue<Member> pQueueStaff = (PriorityQueue<Member>) queue.get(1);
 		PriorityQueue<Member> pQueueStudent = (PriorityQueue<Member>) queue.get(2);
 		
-		int num = book.getNumberOfCopies()/(pQueueStaff.size() + pQueueStaff.size()) ;
+		if(pQueueStaff.size() + pQueueStudent.size() == 0)return false;
+		else
+			num = book.getNumberOfCopies()/(pQueueStaff.size() + pQueueStudent.size());
+		
 		if(num > 0) {
 			while(!pQueueStaff.isEmpty()) {
 				Member staff = pQueueStaff.poll(); 
@@ -115,25 +123,45 @@ public class ReadersClub {
 				}
 			}
 		}
+		return true;
+		}else {
+			return false;
+		}
 			
 	}
 	
 	// process all the book queues
-	public void processQueues() {
-		for(Book book: bookList) {
-			processQueue(book);
-		}
+	public boolean processQueues() {
+		if(!getBookQueues().isEmpty() ) {
+			for(Book book: getBookList()) {
+				processQueue(book);
+			}
+			return true;
+		}else return false;
 	}
 	
+	public static ArrayList<Book> getBookList() {
+		return bookList;
+	}
+	private static HashMap<String, LinkedList<Object>> getBookQueues(){
+		return bookQueues;
+	}
 	
 	public static boolean returnBook(Member member, Book book) {
-		
-		if(bookList.contains(book) && book.getListOfBooksBorrowers().contains(member)) {
+//		&& book.getListOfBooksBorrowers().contains(member
+		if(getBookList().contains(book) && book.getListOfBooksBorrowers().contains(member)) {
 			book.getListOfBooksBorrowers().remove(member);
 			book.setNumberOfCopies(book.getNumberOfCopies() + 1);
 			member.getBookHolder().remove(book);
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean removeBook(Book book) {
+		if(getBookList().contains(book)) {
+			getBookList().remove(book);
+			return true;
+		}else return false;
 	}
 }

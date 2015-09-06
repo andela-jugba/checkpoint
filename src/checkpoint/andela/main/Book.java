@@ -24,6 +24,7 @@ public class Book {
 		author = null;
 		numberOfCopies = 0;
 		isbnNumber = null;
+		this.listOfBooksBorrowers = new ArrayList<>();
 	}
 	
 	// set the Book name

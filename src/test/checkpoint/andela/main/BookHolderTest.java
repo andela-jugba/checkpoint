@@ -56,4 +56,12 @@ public class BookHolderTest {
 		int num = bh.numberOfBooks();
 		assertEquals("should contain 0 book", num, 0);
 	}
+	
+	@Test
+	public void testContains() {
+		Book book = new Book();
+		assertFalse("Should be false",bh.contains(book));
+		bh.add(book);
+		assertTrue("Should now be true", bh.contains(book));
+	}
 }

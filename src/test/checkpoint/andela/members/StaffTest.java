@@ -33,8 +33,6 @@ public class StaffTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetNetPayWithWrongAmount() {
 		testStaff.setNetPay(-1.0);
-		testStaff.setNetPay(20.0);
-		assertEquals(20.0,20.0);
 	}
 	
 }

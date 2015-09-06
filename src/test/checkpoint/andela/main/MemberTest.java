@@ -23,8 +23,7 @@ public class MemberTest {
 	
 	@Test
 	public void testBorrowBook() {
-		member.borrowBook(testBook);
-		assertEquals(1, member.getNumberOfBooksBorrowed());
+		assertFalse(member.borrowBook(testBook));
 	}
 	
 	@Test
@@ -34,12 +33,4 @@ public class MemberTest {
 		assertEquals(0, member.getNumberOfBooksBorrowed());
 	}
 
-	@Test 
-	public void testReturnBookWithNoArguement() {
-		member.borrowBook(testBook);
-		Book book = new Book();
-		member.borrowBook(book);
-		assertSame(member.returnBook(), testBook);
-		assertNotNull(member.returnBook());
-	}
 }
