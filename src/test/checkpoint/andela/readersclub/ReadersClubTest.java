@@ -2,7 +2,6 @@ package test.checkpoint.andela.readersclub;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +19,6 @@ public class ReadersClubTest {
 	private Student testStudent1;
 	private Student testStudent2;
 	private Staff testStaff1;
-	private Staff testStaff2;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -30,7 +28,6 @@ public class ReadersClubTest {
 		testStudent1= new Student();
 		testStudent2 = new Student();
 		testStaff1= new Staff();
-		testStaff2= new Staff();
 	}
 
 	@After
@@ -118,6 +115,7 @@ public class ReadersClubTest {
 		assertFalse("Should return false if queues equals zero", testClub.processQueues());
 	}
 	
+	@Test
 	public void testProcessQueuesNonEmptyQueue() {
 		testClub.addBookToClub(testBook);
 		testStaff1.borrowBook(testBook);
