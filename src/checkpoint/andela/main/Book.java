@@ -1,20 +1,20 @@
 package checkpoint.andela.main;
 
-import java.util.UUID;
+import java.util.ArrayList;
 
 public class Book {
 	private String bookName; // name of Book
 	private String author; // name of book Author
 	private int numberOfCopies; // number of copies of book
 	private String isbnNumber; // ISBN number of book
-	private String bookId; // Id tag for Book
+	private ArrayList<Member> listOfBooksBorrowers;
 	
-
 	public Book(String bookName, String author, int numberOfCopies, String isbnNumber) {
 		this.bookName = bookName;
 		this.author = author;
 		this.numberOfCopies = numberOfCopies;
 		this.isbnNumber = isbnNumber;
+		this.listOfBooksBorrowers = new ArrayList<>();
 	}
 	
 	
@@ -26,17 +26,6 @@ public class Book {
 		isbnNumber = null;
 	}
 	
-	public Book(String bookName, String author, String isbnNumber) {
-		this.bookName = bookName;
-		this.author = author;
-		this.numberOfCopies = 1;
-		this.isbnNumber = isbnNumber;
-		
-		generateBookId();
-	}
-
-
-
 	// set the Book name
 	public void setBookName(String bookName) {
 		this.bookName = bookName;
@@ -77,15 +66,8 @@ public class Book {
 		return isbnNumber;
 	}
 	
-	private void generateBookId() {
-		UUID num = UUID.randomUUID();
-		bookId = num.toString();
+	public ArrayList<Member> getListOfBooksBorrowers() {
+		return listOfBooksBorrowers;
 	}
-
-	public String getBookId() {
-		return bookId;
-	}
-
-
 
 }

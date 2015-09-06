@@ -119,5 +119,10 @@ public class Member {
 	public int getNumberOfBooksBorrowed() {
 		return bookHolder.numberOfBooks();
 	}
-	
+
+
+
+	public BookHolder getBookHolder() {
+		return bookHolder;
+	}
 }

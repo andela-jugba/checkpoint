@@ -1,78 +1,139 @@
 package checkpoint.andela.readersclub;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 import checkpoint.andela.main.Book;
 import checkpoint.andela.main.Member;
+import checkpoint.andela.members.Staff;
 
 public class ReadersClub {
 
-private HashMap<String,LinkedList<Book>> bookMap; //Hash map to hold book title and book stack
+	private static HashMap<String, LinkedList<Object>> bookQueues;
+	private static ArrayList<Book> bookList;
 	
 	public ReadersClub(){
-		bookMap = new HashMap<>();
-	}
-
-	public void addBook(Book book) {
-		String title = book.getBookName();
-		int numberOfCopies = book.getNumberOfCopies();
-		LinkedList<Book> record = new LinkedList<>();
-		
-		for (int i = 0; i < numberOfCopies; i++) {
-			record.push(new Book(book.getBookName(),book.getAuthor(),book.getIsbnNumber()));
-		}
-		
-		bookMap.put(title, record);
-		System.out.println(bookMap.toString());
+		bookQueues = new HashMap<>();
+		bookList = new ArrayList<>(); 
 	}
 	
-	// method to borrow books
-	public void borrowBook(PriorityQueue<Member> pQueue, Book book) {
-		String bookName = book.getBookName();
-		if(bookMap.containsKey(bookName)) {
-//			do {
-//				
-//				if(bookMap.get(bookName).size() == 0 || pQueue.size() == 0) break;
-//				pQueue.poll().borrowBook(bookMap.get(bookName).removeLast());
-//				System.out.println(bookMap.toString());
-//			}
-//			while(bookMap.get(bookName).peek() != null);
-			
-			int num = bookMap.get(bookName).size()/pQueue.size();
-			if(num > 0) {
-				while(!pQueue.isEmpty()) {
-					pQueue.poll().borrowBook(bookMap.get(bookName).removeLast());
-					//System.out.println(bookMap.toString());
-				}
+	public boolean addBookToClub(Book book) {
+		boolean bookStatus;
+		String bookTitle =  book.getBookName();
+		
+		if (!bookList.contains(bookTitle)) {
+		// Add books to Club
+		bookQueues.put(bookTitle, bookQueue(book));
+		bookList.add(book);
+		bookStatus = true;
+		}else {
+			bookStatus = false;
+		}
+		
+		return bookStatus;
+	}
+	
+	// add the member to the unique book queue 
+	public static boolean borrowBook(Member member, Book book) {
+		//process members queue
+		PriorityQueue<Member> pQueueStaff;
+		PriorityQueue<Member> pQueueStudents;
+		
+		/* check that the book exists in the library
+		 * if it does, add the member to the that book borrowing queue
+		 * which is a hashMap of book name and 
+		 * 
+		 * */
+		
+		if(bookList.contains(book.getBookName())) {
+			// queue book borrowing members
+			if(member instanceof Staff) {
+				pQueueStaff = (PriorityQueue<Member>) bookQueues.get(book.getBookName()).get(1);
+				if(!pQueueStaff.contains(member)) pQueueStaff.offer(member);
+				System.out.println(bookQueues.toString());
 			}else {
-				while(!bookMap.get(bookName).isEmpty()) {
-					pQueue.poll().borrowBook(bookMap.get(bookName).removeLast());
-					//System.out.println(bookMap.toString());
-				}
+				pQueueStudents = (PriorityQueue<Member>) bookQueues.get(book.getBookName()).getLast();
+				if(!pQueueStudents.contains(member)) pQueueStudents.offer(member);
+				System.out.println(bookQueues.toString());
 			}
-			
-		}else throw new IllegalArgumentException ("Book must exist in the Club!");
+			return true;
+		}else {
+			return false;
+		}
+		
 	}
 	
-	public void returnBook(Member staff) {
-		Book book = staff.returnBook();
-		String title = book.getBookName();
-		System.out.println(book.toString());
-		System.out.println(title);
+	// create a list containing the book title,staff queue and student queue
+	private LinkedList<Object> bookQueue(Book book){
+		LinkedList<Object> queue = new LinkedList<>();
+		PriorityQueue<Member> pQueueStudent  = new PriorityQueue<>();
+		PriorityQueue<Member> pQueueStaff = new PriorityQueue<>();
 		
-		if (bookMap.containsKey(title) && book.getBookId() != null) {
-		bookMap.get(title).add(book);
-		System.out.println(bookMap.toString() + "This should increase");
-		}else throw new IllegalArgumentException("You can only return books borrowed from the club");
+		queue.add((String) book.getBookName());
+		queue.add(pQueueStaff);
+		queue.add(pQueueStudent);
+		return queue;
 	}
-	public void listAllBooks() {
-		System.out.println("The Library has the following books: ");
-		for(LinkedList<Book>list: bookMap.values()) {
-			for(Book book: list) {
-				System.out.println("Book Title: "+ book.getAuthor() + " Book ISBN " + book.getIsbnNumber());
+	
+	// process one book queue
+	public void processQueue(Book book) {
+		LinkedList<Object>queue = bookQueues.get(book.getBookName());
+		PriorityQueue<Member> pQueueStaff = (PriorityQueue<Member>) queue.get(1);
+		PriorityQueue<Member> pQueueStudent = (PriorityQueue<Member>) queue.get(2);
+		
+		int num = book.getNumberOfCopies()/(pQueueStaff.size() + pQueueStaff.size()) ;
+		if(num > 0) {
+			while(!pQueueStaff.isEmpty()) {
+				Member staff = pQueueStaff.poll(); 
+				staff.getBookHolder().add(book);
+				book.getListOfBooksBorrowers().add(staff);
+				book.setNumberOfCopies(book.getNumberOfCopies() -1);
+				
+			}
+			while(!pQueueStudent.isEmpty()) {
+				Member student = pQueueStudent.poll();
+				student.getBookHolder().add(book);
+				book.getListOfBooksBorrowers().add(student);
+				book.setNumberOfCopies(book.getNumberOfCopies() -1);
+			}
+		}else {
+			while(book.getNumberOfCopies() > 0) {
+				//pQueue.poll().borrowBook(bookMap.get(bookName).removeLast());
+				//System.out.println(bookMap.toString());
+				if(!pQueueStaff.isEmpty()) {
+					Member staff = pQueueStaff.poll();
+					staff.getBookHolder().add(book);
+					book.getListOfBooksBorrowers().add(staff);
+					book.setNumberOfCopies(book.getNumberOfCopies() -1);
+				}else {
+					Member student = pQueueStudent.poll();
+					student.getBookHolder().add(book);
+					book.getListOfBooksBorrowers().add(student);
+					book.setNumberOfCopies(book.getNumberOfCopies() -1);
+				}
 			}
 		}
+			
+	}
+	
+	// process all the book queues
+	public void processQueues() {
+		for(Book book: bookList) {
+			processQueue(book);
+		}
+	}
+	
+	
+	public static boolean returnBook(Member member, Book book) {
+		
+		if(bookList.contains(book) && book.getListOfBooksBorrowers().contains(member)) {
+			book.getListOfBooksBorrowers().remove(member);
+			book.setNumberOfCopies(book.getNumberOfCopies() + 1);
+			member.getBookHolder().remove(book);
+			return true;
+		}
+		return false;
 	}
 }

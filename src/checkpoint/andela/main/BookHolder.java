@@ -36,6 +36,8 @@ public class BookHolder{
 	public int numberOfBooks() {
 		return list.size();
 	}
-	
+	public boolean contains(Book book) {
+		return list.contains(book);
+	}
 	
 }
