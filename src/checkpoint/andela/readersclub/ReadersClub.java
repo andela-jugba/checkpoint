@@ -11,12 +11,12 @@ public class ReadersClub {
 	//private static ArrayList<Book> bookList = new ArrayList<>();
 	private static BookList bookList = new BookList();
 	private static BookQueues bookQueues = new BookQueues(bookList.getList());
-	private QueueProcessor qProcessor;
+	private QueueProcessor queueProcessor;
 	
 
 	// no parameter constructor
 	public ReadersClub() {
-		qProcessor = new QueueProcessor(bookQueues);
+		queueProcessor = new QueueProcessor(bookQueues);
 	}
 
 	// adds book to Club book list
@@ -26,7 +26,6 @@ public class ReadersClub {
 	}
 
 	// add the member to the unique book queue
-
 	public static boolean borrowBook(Member member, Book book) {
 		return bookQueues.queueMember(member, book);
 
@@ -34,12 +33,12 @@ public class ReadersClub {
 	
 	// process one book queue
 	public boolean processQueue(Book book) {
-		return qProcessor.processQueue(book);
+		return queueProcessor.processQueue(book);
 	}
 
 	// process all the book queues
 	public boolean processQueues() {
-		return qProcessor.processQueues();
+		return queueProcessor.processQueues();
 	}
 
 	// retrieves the book list
