@@ -11,7 +11,7 @@ public class StudentTest {
 	@Test
 	public void testStudentClass() {
 		Student st = new Student();
-		assertNotNull("should not be null",st);
+		assertNotNull("should not be null", st);
 	}
 
 }

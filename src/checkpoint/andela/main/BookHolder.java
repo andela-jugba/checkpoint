@@ -40,5 +40,4 @@ public class BookHolder{
 	public boolean contains(Book book) {
 		return list.contains(book);
 	}
-	
 }

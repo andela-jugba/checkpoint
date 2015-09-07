@@ -6,15 +6,14 @@ import checkpoint.andela.main.Book;
 import checkpoint.andela.main.Member;
 
 public class BookList{
-	
-	
-	private ArrayList<Book> list;
+	private ArrayList<Book> list; // array-list of books
 
+	// no argument constructor
 	public BookList() {
-		
 		list = new ArrayList<>();
 	}
-
+	
+	// add a book to the book list
 	public boolean add(Book book) {
 		//String bookTitle = book.getBookName();
 
@@ -28,10 +27,12 @@ public class BookList{
 		}
 	}
 
+	// retrieve the list of all the books added
 	public ArrayList<Book> getList() {
 		return list;
 	}
 	
+	// removes a book if present on the list
 	public boolean remove(Book book) {
 		if (getList().contains(book)) {
 			getList().remove(book);
@@ -50,5 +51,4 @@ public class BookList{
 		}
 		return false;
 	}
-
 }

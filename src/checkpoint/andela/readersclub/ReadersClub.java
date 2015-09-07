@@ -6,13 +6,9 @@ import checkpoint.andela.main.Book;
 import checkpoint.andela.main.Member;
 
 public class ReadersClub {
-
-	//private static HashMap<String, LinkedList<Object>> bookQueues = new HashMap<>();
-	//private static ArrayList<Book> bookList = new ArrayList<>();
 	private static BookList bookList = new BookList();
 	private static BookQueues bookQueues = new BookQueues(bookList.getList());
 	private QueueProcessor queueProcessor;
-	
 
 	// no parameter constructor
 	public ReadersClub() {
@@ -28,9 +24,8 @@ public class ReadersClub {
 	// add the member to the unique book queue
 	public static boolean borrowBook(Member member, Book book) {
 		return bookQueues.queueMember(member, book);
-
 	}
-	
+
 	// process one book queue
 	public boolean processQueue(Book book) {
 		return queueProcessor.processQueue(book);
