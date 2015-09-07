@@ -1,19 +1,20 @@
 package checkpoint.andela.members;
 
+import java.util.ArrayList;
+
 import checkpoint.andela.main.Member;
 
 public class Staff extends Member {
-	
 	private String staffNumber;
 	private Double netPay;
-	private String studentNumber;
+	private ArrayList<Student> studentList;
 
 	public Staff(String fullName, char g, String dateOfbirth, String phoneNumber) {
 		super(fullName, g, dateOfbirth, phoneNumber);
-		// TODO Auto-generated constructor stub
+		studentList = new ArrayList<>();
 	}
 	public Staff() {
-		// TODO Auto-generated constructor stub
+		studentList = new ArrayList<>();
 	}
 
 	public String getStaffNumber() {
@@ -28,16 +29,18 @@ public class Staff extends Member {
 		return netPay;
 	}
 
-	public void setNetPay(Double netPay) {
-		if(netPay >= 0)this.netPay = netPay;
-		else throw new IllegalArgumentException("Netpay must be greater than Zero");
+	public boolean setNetPay(Double netPay) {
+		if(netPay > 0) {
+			this.netPay = netPay;
+			return true;
+		}
+		else return false;
 	}
 	public void assignToStudent(Student testStudent) {
-		// TODO Auto-generated method stub
+		studentList.add(testStudent);
 		
 	}
-	public String getStudentNumber() {
-		return studentNumber;
+	public ArrayList<Student> getStudentList() {
+		return studentList;
 	}
-
 }

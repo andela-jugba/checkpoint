@@ -9,16 +9,16 @@ public class Book {
 	private String isbnNumber; // ISBN number of book
 	private ArrayList<Member> listOfBooksBorrowers;
 	
+	// four arguments constructor
 	public Book(String bookName, String author, int numberOfCopies, String isbnNumber) {
-		this.bookName = bookName;
-		this.author = author;
-		this.numberOfCopies = numberOfCopies;
-		this.isbnNumber = isbnNumber;
+		setBookName(bookName);
+		setAuthor(author);
+		setNumberOfCopies(numberOfCopies);
+		setIsbnNumber(isbnNumber);
 		this.listOfBooksBorrowers = new ArrayList<>();
 	}
 	
-	
-
+	// Default constructor
 	public Book() {
 		bookName = null;
 		author = null;
@@ -70,5 +70,4 @@ public class Book {
 	public ArrayList<Member> getListOfBooksBorrowers() {
 		return listOfBooksBorrowers;
 	}
-
 }

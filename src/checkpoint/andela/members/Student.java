@@ -29,9 +29,9 @@ public class Student extends Member {
 	public String getmClass() {
 		return mClass;
 	}
+	
 	// set the class of the student
 	public void setmClass(String mClass) {
 		this.mClass = mClass;
 	}
-	
 }
