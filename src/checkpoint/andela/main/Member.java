@@ -17,10 +17,10 @@ public class Member implements Comparable<Member> {
 
 	// four-argument constructor
 	public Member(String fullName, char g, String dateOfbirth, String phoneNumber) {
-		this.fullName = fullName;
-		this.gender = g;
-		this.dateOfbirth = dateOfbirth;
-		this.phoneNumber = phoneNumber;
+		setFullName(fullName);
+		setGender(g);
+		setDateOfbirth(dateOfbirth);
+		setPhoneNumber(phoneNumber);
 
 		setDateOfRegistration();
 		bookHolder = new BookHolder();

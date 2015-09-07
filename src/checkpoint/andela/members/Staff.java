@@ -28,9 +28,12 @@ public class Staff extends Member {
 		return netPay;
 	}
 
-	public void setNetPay(Double netPay) {
-		if(netPay >= 0)this.netPay = netPay;
-		else throw new IllegalArgumentException("Netpay must be greater than Zero");
+	public boolean setNetPay(Double netPay) {
+		if(netPay > 0) {
+			this.netPay = netPay;
+			return true;
+		}
+		else return false;
 	}
 	public void assignToStudent(Student testStudent) {
 		// TODO Auto-generated method stub

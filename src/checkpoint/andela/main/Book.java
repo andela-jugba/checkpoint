@@ -10,10 +10,10 @@ public class Book {
 	private ArrayList<Member> listOfBooksBorrowers;
 	
 	public Book(String bookName, String author, int numberOfCopies, String isbnNumber) {
-		this.bookName = bookName;
-		this.author = author;
-		this.numberOfCopies = numberOfCopies;
-		this.isbnNumber = isbnNumber;
+		setBookName(bookName);
+		setAuthor(author);
+		setNumberOfCopies(numberOfCopies);
+		setIsbnNumber(isbnNumber);
 		this.listOfBooksBorrowers = new ArrayList<>();
 	}
 	

@@ -30,9 +30,9 @@ public class StaffTest {
 		assertEquals("Student number should be the same", testStaff.getStudentNumber(), testStudent.getStudentNumber());
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testSetNetPayWithWrongAmount() {
-		testStaff.setNetPay(-1.0);
+		assertFalse(testStaff.setNetPay(-1.0));
 	}
 	
 }
