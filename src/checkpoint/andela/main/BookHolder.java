@@ -11,11 +11,12 @@ public class BookHolder{
 		list = new LinkedList<>();
 	}
 	
-	public void add(Book book) {
+	public boolean add(Book book) {
 		if (book != null) {
 			//if (book.getNumberOfCopies() >= 1)list.add(book);
 			list.push(book);
-			}else throw new IllegalArgumentException("Cannot add null book to bookHolder");
+			return true;
+			}else return false;
 	}
 	
 	public Book remove(Book book) {

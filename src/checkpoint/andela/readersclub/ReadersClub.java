@@ -93,9 +93,9 @@ public class ReadersClub {
 			@SuppressWarnings("unchecked")
 			PriorityQueue<Member> pQueueStudent = (PriorityQueue<Member>) queue.get(2);
 
-			if (pQueueStaff.size() + pQueueStudent.size() == 0)
-				return false;
-			else
+			//if (pQueueStaff.size() + pQueueStudent.size() == 0) {}
+			//	return false;
+			//else
 				num = book.getNumberOfCopies() / (pQueueStaff.size() + pQueueStudent.size());
 			
 			// Depending on if there are more copies or borrowers

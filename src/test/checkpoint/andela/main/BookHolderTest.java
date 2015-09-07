@@ -26,9 +26,9 @@ public class BookHolderTest {
 		
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testAddNullBook() {
-		bh.add(nullBook);
+		assertFalse(bh.add(nullBook));
 	}
 	
 	@Test

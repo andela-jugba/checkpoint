@@ -32,5 +32,13 @@ public class MemberTest {
 		member.returnBook(testBook);
 		assertEquals(0, member.getNumberOfBooksBorrowed());
 	}
+	
+	@Test
+	public void testCompareTo() {
+		Member mem = new Member();
+		assertTrue( 1 == member.compareTo(mem) || 0 == member.compareTo(mem));
+		assertEquals(0,mem.compareTo(mem));
+		assertTrue(-1 == mem.compareTo(member) || 0 == mem.compareTo(member));
+	}
 
 }
