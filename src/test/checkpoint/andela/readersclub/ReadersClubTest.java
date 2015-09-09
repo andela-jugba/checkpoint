@@ -18,15 +18,23 @@ public class ReadersClubTest {
 	private Student testStudent1;
 	private Student testStudent2;
 	private Staff testStaff1;
+	private Staff testStaff2;
+	private Book bk;
 
 	@Before
 	public void setUp() throws Exception {
 		testClub = new ReadersClub();
 		testBook = new Book("Things fall apart", "Chinua Achebe", 4, "fs3534t4g4");
 		testBook2 = new Book("Gone with the wind", "Unknown", 1, "wfwf345");
-		testStudent1 = new Student();
-		testStudent2 = new Student();
-		testStaff1 = new Staff();
+		testStudent1 = new Student("Student1", 'M', "1996", "341224525");
+		testStudent2 = new Student("Student2", 'F', "1997", "242425");
+		testStaff1 = new Staff("Staff1", 'F', "1989", "4242545");
+		testStaff2 = new Staff("Staff2", 'M', "1990", "23423424");
+		
+		testStaff2.setDateOfRegistration(2000, 5, 1);
+		testStaff1.setDateOfRegistration(2008, 5, 4);
+		testStudent1.setDateOfRegistration(2006, 3, 4);
+		testStudent2.setDateOfRegistration(2007, 7, 12);
 	}
 
 	@After
@@ -44,6 +52,7 @@ public class ReadersClubTest {
 		assertTrue(testClub.addBookToClub(testBook2));
 		assertFalse(testClub.addBookToClub(testBook2));
 		assertTrue(testClub.removeBook(testBook2));
+		assertFalse(testClub.addBookToClub(bk));
 	}
 
 	@Test
@@ -88,26 +97,32 @@ public class ReadersClubTest {
 
 	@Test
 	public void testProcessQueueEmptyQueue() {
-		assertFalse("There should be no queue to process for this book", testClub.processQueue(testBook));
+		assertFalse("There should be no queue to process for this book", testClub.processQueues());
 	}
 
 	@Test
 	public void testProcessQueueNonEmptyQueue() {
 		testClub.addBookToClub(testBook);
 		testStudent1.borrowBook(testBook);
-		assertTrue("Should process the existing queue", testClub.processQueue(testBook));
+		assertTrue("Should process the existing queue", testClub.processQueues());
 	}
 
 	@Test
 	public void testProcessQueueWithMoreBorrowersThanBooks() {
-		Book book = new Book("hdfjfh", "kn", 2, "ffs");
-
+		Book book = new Book("hdfjfh", "kn",3, "ffs");
 		testClub.addBookToClub(book);
+		testStaff1.borrowBook(book);
+		testStaff2.borrowBook(book);
 		testStaff1.borrowBook(book);
 		testStudent1.borrowBook(book);
 		testStudent2.borrowBook(book);
 
-		testClub.processQueue(book);
+		testClub.processQueues();
+//		System.out.println("The first: "+book.getListOfBooksBorrowers().get(0).getFullName());
+//		System.out.println("The second: "+book.getListOfBooksBorrowers().get(1).getFullName());
+//		System.out.println("The third: "+book.getListOfBooksBorrowers().get(2).getFullName());
+//	//System.out.println("The fourth: "+book.getListOfBooksBorrowers().get(3).getFullName());
+
 	}
 
 	@Test

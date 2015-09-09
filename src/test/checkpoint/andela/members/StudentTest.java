@@ -12,6 +12,11 @@ public class StudentTest {
 	public void testStudentClass() {
 		Student st = new Student();
 		assertNotNull("should not be null", st);
+		
+		st.setmClass("D");
+		st.setStudentNumber("133143");
+		assertEquals(st.getmClass(), "D");
+		assertEquals(st.getStudentNumber(), "133143");
 	}
 
 }

@@ -16,7 +16,9 @@ public class BookList{
 	// add a book to the book list
 	public boolean add(Book book) {
 		//String bookTitle = book.getBookName();
-
+		if(book == null) {
+			return false;
+		}else
 		if (!list.contains(book)) {
 			// Add books to Club
 			//getBookQueues().put(bookTitle, bookQueue(book));

@@ -67,6 +67,12 @@ public class Member implements Comparable<Member> {
 	public void setDateOfRegistration() {
 		this.dateOfRegistration = new Date();
 	}
+	// set date
+	public void setDateOfRegistration(int year, int month, int date) {
+		@SuppressWarnings("deprecation")
+		Date dt = new Date(year, month, date, 0, 0, 0);
+		this.dateOfRegistration = dt;
+	}
 
 	// set full name
 	public String getFullName() {
@@ -111,16 +117,10 @@ public class Member implements Comparable<Member> {
 	public int getNumberOfBooksBorrowed() {
 		return bookHolder.numberOfBooks();
 	}
-
+	
 	// compares members by date of registration
 	public int compareTo(Member member) {
-		if (getDateOfRegistration().before(member.getDateOfRegistration())) {
-			return 1;
-		}
-		if (getDateOfRegistration().after(member.getDateOfRegistration())) {
-			return -1;
-		}
-		return 0;
+		return SubClassesCompare.compareTo(this, member);
 	}
 
 	public BookHolder getBookHolder() {

@@ -7,28 +7,24 @@ import checkpoint.andela.main.Member;
 
 public class ReadersClub {
 	private static BookList bookList = new BookList();
-	private static BookQueues bookQueues = new BookQueues(bookList.getList());
-	private QueueProcessor queueProcessor;
+	private static BookQueue bookQueue = new BookQueue();
+	private  QueueProcessor queueProcessor; //= new QueueProcessor();
 
 	// no parameter constructor
 	public ReadersClub() {
-		queueProcessor = new QueueProcessor(bookQueues);
+		queueProcessor = new QueueProcessor();
 	}
 
 	// adds book to Club book list
 	public boolean addBookToClub(Book book) {
-		bookQueues.put(book);
+		bookQueue.put(book);
+		queueProcessor.addBookQueue(bookQueue);
 		return bookList.add(book);
 	}
 
 	// add the member to the unique book queue
 	public static boolean borrowBook(Member member, Book book) {
-		return bookQueues.queueMember(member, book);
-	}
-
-	// process one book queue
-	public boolean processQueue(Book book) {
-		return queueProcessor.processQueue(book);
+		return bookQueue.queueMember(member, book);
 	}
 
 	// process all the book queues

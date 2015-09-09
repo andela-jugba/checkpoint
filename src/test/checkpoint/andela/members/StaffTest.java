@@ -22,11 +22,17 @@ public class StaffTest {
 	public void testStaff() {
 		Staff sf = new Staff();
 		assertNotNull("Should not be null", sf);
+		sf.setStaffNumber("nmm");
+		assertEquals(sf.getStaffNumber(),"nmm");
+		
 	}
 
 	@Test
 	public void testSetNetPayWithWrongAmount() {
 		assertFalse(testStaff.setNetPay(-1.0));
+		assertTrue(testStaff.setNetPay(10.0));
+		testStaff.setNetPay(20.0);
+		assertNotNull(testStaff.getNetPay());
 	}
 
 	@Test
