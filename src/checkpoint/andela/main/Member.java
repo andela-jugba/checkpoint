@@ -13,7 +13,6 @@ public class Member implements Comparable<Member> {
 	private String email; // email of this member
 	private String phoneNumber;
 	private Date dateOfRegistration;
-	private BookHolder bookHolder;
 
 	// four-argument constructor
 	public Member(String fullName, char g, String dateOfbirth, String phoneNumber) {
@@ -23,7 +22,6 @@ public class Member implements Comparable<Member> {
 		setPhoneNumber(phoneNumber);
 
 		setDateOfRegistration();
-		bookHolder = new BookHolder();
 	}
 
 	public Member() {
@@ -34,7 +32,6 @@ public class Member implements Comparable<Member> {
 		phoneNumber = null;
 
 		setDateOfRegistration();
-		bookHolder = new BookHolder();
 	}
 
 	// set the full name of the member
@@ -105,25 +102,19 @@ public class Member implements Comparable<Member> {
 	}
 
 	// borrow book
-	public boolean borrowBook(Book book) {
-		return ReadersClub.borrowBook(this, book);
+	public void borrowBook(Book book) {
+		ReadersClub.borrowBook(this, book);
 	}
 
 	// return specific book
-	public boolean returnBook(Book book) {
-		return ReadersClub.returnBook(this, book);
+	public void returnBook(Book book) {
+		ReadersClub.returnBook(this, book);
 	}
 
-	public int getNumberOfBooksBorrowed() {
-		return bookHolder.numberOfBooks();
-	}
 	
 	// compares members by date of registration
 	public int compareTo(Member member) {
-		return SubClassesCompare.compareTo(this, member);
+		return MemberCompare.compareTo(this, member);
 	}
 
-	public BookHolder getBookHolder() {
-		return bookHolder;
-	}
 }

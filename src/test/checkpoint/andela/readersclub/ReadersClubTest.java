@@ -39,7 +39,7 @@ public class ReadersClubTest {
 
 	@After
 	public void tearDown() throws Exception {
-		ReadersClub.getBookList().clear();
+		testClub.getQueue().clear();
 	}
 
 	@Test
@@ -49,38 +49,30 @@ public class ReadersClubTest {
 
 	@Test
 	public void testAddBookToClub() {
-		assertTrue(testClub.addBookToClub(testBook2));
-		assertFalse(testClub.addBookToClub(testBook2));
-		assertTrue(testClub.removeBook(testBook2));
-		assertFalse(testClub.addBookToClub(bk));
+		assertNotEquals(testClub.getBook(), testBook2);
+		testClub.addBookToClub(testBook2);
+		assertEquals(testBook2, testClub.getBook());
 	}
 
-	@Test
-	public void testRemoveBookNotInClub() {
-		assertFalse("Should be false if book not in club", testClub.removeBook(testBook2));
-	}
 
-	@Test
-	public void testRemoveBookInClub() {
-		testClub.addBookToClub(testBook);
-		assertTrue("Should be true if book is in club", testClub.removeBook(testBook));
-	}
+//	@Test
+//	public void testBorrowBookNotInClub() {
+//		assertFalse(testStaff1.borrowBook(testBook));
+//	}
 
-	@Test
-	public void testBorrowBookNotInClub() {
-		assertFalse(testStaff1.borrowBook(testBook));
-	}
-
-	@Test
-	public void testBorrowBookInClub() {
-		testClub.addBookToClub(testBook);
-		assertTrue(testStaff1.borrowBook(testBook));
-		assertTrue(testStudent1.borrowBook(testBook));
-	}
+//	@Test
+//	public void testBorrowBookInClub() {
+//		testClub.addBookToClub(testBook);
+//		assertTrue(testStaff1.borrowBook(testBook));
+//		assertTrue(testStudent1.borrowBook(testBook));
+//	}
 
 	@Test
 	public void testReturnBookNotInClub() {
-		assertFalse(testStaff1.returnBook(testBook));
+		int num = testBook.getNumberOfCopies();
+		testClub.addBookToClub(testBook2);
+		testStaff1.returnBook(testBook);
+		assertEquals(num, testBook.getNumberOfCopies());
 	}
 
 	@Test
@@ -88,23 +80,22 @@ public class ReadersClubTest {
 		Book book = new Book("String", "author", 4, "dfdfdfg");
 		testClub.addBookToClub(book);
 		testStaff1.borrowBook(book);
-
+		System.out.println(book.getNumberOfCopies());
 		// process queue so the member gets the book before returning it
 		testClub.processQueues();
-
-		assertTrue(testStaff1.returnBook(book));
+		System.out.println(book.getNumberOfCopies());
+		testStaff1.returnBook(book);
+		System.out.println(book.getNumberOfCopies());
+		assertEquals(4, book.getNumberOfCopies());
 	}
-
-	@Test
-	public void testProcessQueueEmptyQueue() {
-		assertFalse("There should be no queue to process for this book", testClub.processQueues());
-	}
+	
 
 	@Test
 	public void testProcessQueueNonEmptyQueue() {
 		testClub.addBookToClub(testBook);
 		testStudent1.borrowBook(testBook);
-		assertTrue("Should process the existing queue", testClub.processQueues());
+		testClub.processQueues();
+		assertEquals(testBook.getNumberOfCopies(), 3);
 	}
 
 	@Test
@@ -116,27 +107,22 @@ public class ReadersClubTest {
 		testStaff1.borrowBook(book);
 		testStudent1.borrowBook(book);
 		testStudent2.borrowBook(book);
-
+		
 		testClub.processQueues();
 //		System.out.println("The first: "+book.getListOfBooksBorrowers().get(0).getFullName());
 //		System.out.println("The second: "+book.getListOfBooksBorrowers().get(1).getFullName());
 //		System.out.println("The third: "+book.getListOfBooksBorrowers().get(2).getFullName());
-//	//System.out.println("The fourth: "+book.getListOfBooksBorrowers().get(3).getFullName());
+//		System.out.println("The fourth: "+book.getListOfBooksBorrowers().get(3).getFullName());
 
-	}
-
-	@Test
-	public void testProcessQueuesEmptyQueue() {
-		testClub.processQueues();
-		assertFalse("Should return false if queues equals zero", testClub.processQueues());
 	}
 
 	@Test
 	public void testProcessQueuesNonEmptyQueue() {
 		testClub.addBookToClub(testBook);
 		testStaff1.borrowBook(testBook);
-
-		assertTrue("Should return true for queues to process", testClub.processQueues());
+		testClub.processQueues();
+		
+		assertEquals("Should return true for queues to process", testBook.getNumberOfCopies(), 3);
 	}
 
 }

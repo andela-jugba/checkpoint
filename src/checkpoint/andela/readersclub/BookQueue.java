@@ -2,6 +2,7 @@ package checkpoint.andela.readersclub;
 
 
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import checkpoint.andela.main.Book;
@@ -10,9 +11,11 @@ import checkpoint.andela.main.Member;
 public class BookQueue {
 	private Book book;
 	private PriorityQueue<Member> memberQueue;
+	private ArrayList<Member> bookBorrowers;
 
 	public BookQueue() {
 		memberQueue = new PriorityQueue<>();
+		bookBorrowers = new ArrayList<>();
 	}
 
 	public void put(Book book) {
@@ -21,14 +24,12 @@ public class BookQueue {
 		}
 	}
 	
-	public boolean queueMember(Member member, Book book) {
+	public void queueMember(Member member, Book book) {
 		
 		if (this.book == book) {
 			// queue book borrowing members
 			if(!memberQueue.contains(member))memberQueue.offer(member);
-			return true;
 		}
-		return false;
 	}
 
 	public PriorityQueue<Member> getMemberQueue() {
@@ -37,5 +38,26 @@ public class BookQueue {
 
 	public Book getBook() {
 		return book;
+	}
+	
+	public ArrayList<Member> getBookBorrowers(){
+		return bookBorrowers;
+	}
+	
+	//add member to list of borrowers
+	public void addBorrower(Member member) {
+		bookBorrowers.add(member);
+	}
+	public void removeBorrower(Member member) {
+		bookBorrowers.remove(member);
+	}
+	public int numberOfBookCopies() {
+		return book.getNumberOfCopies();
+	}
+	public boolean isEmpty() {
+		return memberQueue.isEmpty();
+	}
+	public boolean containsBorrower(Member member) {
+		return bookBorrowers.contains(member);
 	}
 }

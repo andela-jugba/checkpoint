@@ -17,7 +17,7 @@ public class MemberTest {
 	@Before
 	public void setUp() throws Exception {
 		member = new Member("James Harden", 'M', "12/3/1988", "23243545");
-		testBook = new Book();
+		testBook = new Book("bb", "fdf", 1, "fdfdf");
 	}
 
 	@Test
@@ -34,15 +34,10 @@ public class MemberTest {
 	}
  
 	@Test
-	public void testBorrowBook() {
-		assertFalse(member.borrowBook(testBook));
-	}
-
-	@Test
 	public void testReturnBook() {
 		member.borrowBook(testBook);
 		member.returnBook(testBook);
-		assertEquals(0, member.getNumberOfBooksBorrowed());
+		assertEquals(1, testBook.getNumberOfCopies());
 	}
 
 	@Test

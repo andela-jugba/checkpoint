@@ -15,47 +15,50 @@ public class QueueProcessor {
 		bookQueues = new ArrayList<>();
 	}
 
-	private void processQueue(BookQueue book) {
-		int num;			
-			num = book.getBook().getNumberOfCopies()/book.getMemberQueue().size();
-
-			if (num > 0) {
-				while(!book.getMemberQueue().isEmpty()) {
-					processMemberQueue(book.getMemberQueue(), book.getBook());
-				}
-			} else{
-				while (book.getBook().getNumberOfCopies() > 0) {
-						processMemberQueue(book.getMemberQueue(), book.getBook());
-				}
-			}
+	private void processQueue(BookQueue bookQueue) {
+		while (bookQueue.numberOfBookCopies() > 0) {
+			if (bookQueue.isEmpty()) break;
+			processMemberQueue(bookQueue);	
+		}
+			
 	}
 
 	// process the first one member on the queue
-	private void processMemberQueue(PriorityQueue<Member> pQueueMember, Book book) {
-		Member member = pQueueMember.poll();
-		member.getBookHolder().add(book);
-		book.getListOfBooksBorrowers().add(member);
-		book.setNumberOfCopies(book.getNumberOfCopies() - 1);
+	private void processMemberQueue(BookQueue bookQueue) {
+		if(bookQueue != null) {
+		PriorityQueue<Member> memberQueue = bookQueue.getMemberQueue();
+		Book book = bookQueue.getBook();	
+		
+		Member member = memberQueue.poll();
+		
+		bookQueue.addBorrower(member);
+		book.borrow();
+		System.out.println(book.getNumberOfCopies());
+		}
 	}
 
 	// process all the book queues
-	public boolean processQueues() {
+	public void processQueues() {
 		if (!bookQueues.isEmpty()) {
 			for (BookQueue book : bookQueues) {
 				processQueue(book);
 			}
-			return true;
-		} else
-			return false;
+		} 
 	}
 	
 	// add book queues
-	public boolean addBookQueue(BookQueue bookQueue) {
+	public void addBookQueue(BookQueue bookQueue) {
 		if(!bookQueues.contains(bookQueue)) {
 			bookQueues.add(bookQueue);
-			return true;
 		}
-		return false;
+	}
+	public void returnBook(Member member, Book book) {
+		for(BookQueue bookQueue: bookQueues) {
+			if (bookQueue.getBook() == book && bookQueue.containsBorrower(member)) {
+				bookQueue.removeBorrower(member);
+				bookQueue.getBook().receive();
+			}
+		}
 	}
 
 }

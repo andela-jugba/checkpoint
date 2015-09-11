@@ -1,13 +1,11 @@
 package checkpoint.andela.main;
 
-import java.util.ArrayList;
 
 public class Book {
 	private String bookName; // name of Book
 	private String author; // name of book Author
 	private int numberOfCopies; // number of copies of book
 	private String isbnNumber; // ISBN number of book
-	private ArrayList<Member> listOfBooksBorrowers;
 	
 	// four arguments constructor
 	public Book(String bookName, String author, int numberOfCopies, String isbnNumber) {
@@ -15,7 +13,6 @@ public class Book {
 		setAuthor(author);
 		setNumberOfCopies(numberOfCopies);
 		setIsbnNumber(isbnNumber);
-		this.listOfBooksBorrowers = new ArrayList<>();
 	}
 	
 	// Default constructor
@@ -24,7 +21,6 @@ public class Book {
 		author = null;
 		numberOfCopies = 0;
 		isbnNumber = null;
-		this.listOfBooksBorrowers = new ArrayList<>();
 	}
 	
 	// set the Book name
@@ -67,7 +63,10 @@ public class Book {
 		return isbnNumber;
 	}
 	
-	public ArrayList<Member> getListOfBooksBorrowers() {
-		return listOfBooksBorrowers;
+	public void borrow() {
+		numberOfCopies--;
+	}
+	public void receive() {
+		numberOfCopies++;
 	}
 }
