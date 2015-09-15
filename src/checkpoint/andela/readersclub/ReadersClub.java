@@ -1,5 +1,6 @@
 package checkpoint.andela.readersclub;
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import checkpoint.andela.main.Book;
@@ -35,12 +36,24 @@ public class ReadersClub {
 		 queueProcessor.returnBook(member, book);
 	}
 
-	
 	public PriorityQueue<Member> getQueue() {
 		return bookQueue.getMemberQueue();
 	}
 	public Book getBook() {
 		return bookQueue.getBook();
+	}
+
+	public ArrayList<Member> getBorrowers() {
+		return bookQueue.getBorrowers();
+		
+	}
+
+	public static BookQueue getBookQueue() {
+		return bookQueue;
+	}
+
+	public static QueueProcessor getQueueProcessor() {
+		return queueProcessor;
 	}
 	
 }

@@ -40,12 +40,8 @@ public class BookQueue {
 		return book;
 	}
 	
-	public ArrayList<Member> getBookBorrowers(){
-		return bookBorrowers;
-	}
-	
 	//add member to list of borrowers
-	public void addBorrower(Member member) {
+	private void addBorrower(Member member) {
 		bookBorrowers.add(member);
 	}
 	public void removeBorrower(Member member) {
@@ -60,4 +56,22 @@ public class BookQueue {
 	public boolean containsBorrower(Member member) {
 		return bookBorrowers.contains(member);
 	}
+	
+	private void borrow() {
+		book.borrow();
+	}
+	
+	public void receive() {
+		book.receive();
+	}
+	
+	public void poll() {
+		addBorrower(memberQueue.poll());
+		borrow();
+	}
+
+	public ArrayList<Member> getBorrowers() {
+		return bookBorrowers;
+	}
 }
+

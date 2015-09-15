@@ -19,7 +19,7 @@ public class Book {
 	public Book() {
 		bookName = null;
 		author = null;
-		numberOfCopies = 0;
+		numberOfCopies = 1;
 		isbnNumber = null;
 	}
 	
